@@ -1,0 +1,11 @@
+#ifndef CONFIG_IYNAIX_H
+#define CONFIG_IYNAIX_H
+
+#define PERMISSIVE_HOLD
+
+#define ONESHOT_TAP_TOGGLE 2
+#define ONESHOT_TIMEOUT 3000
+
+#define LEADER_TIMEOUT 300
+
+#endif
