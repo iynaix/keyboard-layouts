@@ -18,7 +18,7 @@ Some of the things in the layout only work under Linux.
 * The blue `Shift`, `Ctrl`, `Alt` and `Win` modifiers are mod-tap keys. When tapped, they perform as expected. When held, they function as the respective modifiers.
 * The `Esc` key also doubles as a one-shot cancel key: if tapped while any of the one-shot modifiers are in-flight (as in, single-tapped, and not expired yet), it cancels all one-shot modifiers. Otherwise it sends the usual keycode.
 * The number keys with lower legends run the given program in conjunction with `Win`. This is done via a [custom application switcher / launcher][wintool]. E.g. `Win 6` either launches chrome or alt-tabs between currently running chrome instances
-* The green `(` key produces a `(` when single tapped and `)` when double-tapped.
+* The green `(` and `[` keys produce the left brackets / parens when single-tapped and their right equivalents when double-tapped.
 * The **Lead** key allows me to type in a sequence of keys, and trigger some actions:
   - `LEAD s` types `¯\_(ツ)_/¯`
   - `LEAD y` types `\o/`.
