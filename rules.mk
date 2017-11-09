@@ -1,1 +1,4 @@
+NKRO_ENABLE = yes
+FORCE_NKRO = yes
+
 TAP_DANCE_ENABLE = yes

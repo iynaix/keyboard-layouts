@@ -8,6 +8,11 @@
   register_code (code);                         \
   unregister_code (code)
 
+#define TAP_UNICODE(code)                       \
+  unicode_input_start();                        \
+  register_hex(0x51F8);                         \
+  unicode_input_finish()
+
 enum custom_keycodes {
   PLACEHOLDER = SAFE_RANGE, // can always be here
   EPRM,
@@ -259,13 +264,13 @@ void matrix_scan_user(void) {
 
       // s: shrug
       SEQ_ONE_KEY (CTL_T(KC_S)) {
-        unicode_input_start(); register_hex(0xaf); unicode_input_finish();
+        TAP_UNICODE(0xaf);
         TAP_ONCE(KC_BSLS);
         register_code(KC_RSFT); TAP_ONCE(KC_MINS); TAP_ONCE(KC_9); unregister_code(KC_RSFT);
-        unicode_input_start(); register_hex(0x30c4); unicode_input_finish();
+        TAP_UNICODE(0x30c4);
         register_code(KC_RSFT); TAP_ONCE (KC_0); TAP_ONCE(KC_MINS); unregister_code(KC_RSFT);
         TAP_ONCE(KC_SLSH);
-        unicode_input_start(); register_hex(0xaf); unicode_input_finish();
+        TAP_UNICODE(0xaf);
       }
 
       // y: \o/
@@ -275,41 +280,41 @@ void matrix_scan_user(void) {
 
       // f: middle fingers
       SEQ_ONE_KEY (GUI_T(KC_F)) {
-        unicode_input_start(); register_hex(0x51F8); unicode_input_finish();
-        register_code (KC_RSFT); TAP_ONCE (KC_9); unregister_code (KC_RSFT);
-        unicode_input_start (); register_hex(0x30c4); unicode_input_finish();
-        register_code (KC_RSFT); TAP_ONCE (KC_0); unregister_code (KC_RSFT);
-        unicode_input_start (); register_hex(0x51F8); unicode_input_finish();
+        TAP_UNICODE(0x51F8);
+        register_code (KC_RSFT); TAP_ONCE (KC_9); unregister_code(KC_RSFT);
+        TAP_UNICODE(0x30c4);
+        register_code (KC_RSFT); TAP_ONCE (KC_0); unregister_code(KC_RSFT);
+        TAP_UNICODE(0x51F8);
       }
 
       // l: lenny face
       SEQ_ONE_KEY (CTL_T(KC_L)) {
         register_code(KC_RSFT); TAP_ONCE(KC_9); unregister_code(KC_RSFT); TAP_ONCE(KC_SPACE);
-        unicode_input_start(); register_hex(0x361); unicode_input_finish();
-        unicode_input_start(); register_hex(0xb0); unicode_input_finish();
+        TAP_UNICODE(0x361);
+        TAP_UNICODE(0xb0);
         TAP_ONCE(KC_SPACE);
-        unicode_input_start(); register_hex(0x35c); unicode_input_finish();
-        unicode_input_start(); register_hex(0x296); unicode_input_finish();
+        TAP_UNICODE(0x35c);
+        TAP_UNICODE(0x296);
         TAP_ONCE(KC_SPACE);
-        unicode_input_start(); register_hex(0x361); unicode_input_finish();
-        unicode_input_start(); register_hex(0xb0); unicode_input_finish();
+        TAP_UNICODE(0x361);
+        TAP_UNICODE(0xb0);
         register_code(KC_RSFT); TAP_ONCE (KC_0); unregister_code(KC_RSFT);
       }
 
       // t: table flip
       SEQ_ONE_KEY (KC_T) {
         register_code(KC_RSFT); TAP_ONCE(KC_9); unregister_code(KC_RSFT);
-        unicode_input_start(); register_hex(0x256f); unicode_input_finish();
-        unicode_input_start(); register_hex(0xb0); unicode_input_finish();
-        unicode_input_start(); register_hex(0x25a1); unicode_input_finish();
-        unicode_input_start(); register_hex(0xb0); unicode_input_finish();
-        unicode_input_start(); register_hex(0xff09); unicode_input_finish();
-        unicode_input_start(); register_hex(0x256f); unicode_input_finish();
-        unicode_input_start(); register_hex(0xfe35); unicode_input_finish();
+        TAP_UNICODE(0x256f);
+        TAP_UNICODE(0xb0);
+        TAP_UNICODE(0x25a1);
+        TAP_UNICODE(0xb0);
+        TAP_UNICODE(0xff09);
+        TAP_UNICODE(0x256f);
+        TAP_UNICODE(0xfe35);
         TAP_ONCE(KC_SPACE);
-        unicode_input_start(); register_hex(0x253b); unicode_input_finish();
-        unicode_input_start(); register_hex(0x2501); unicode_input_finish();
-        unicode_input_start(); register_hex(0x253b); unicode_input_finish();
+        TAP_UNICODE(0x253b);
+        TAP_UNICODE(0x2501);
+        TAP_UNICODE(0x253b);
       }
 
       // ul: set unicode mode for linux

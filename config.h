@@ -1,6 +1,8 @@
 #ifndef CONFIG_IYNAIX_H
 #define CONFIG_IYNAIX_H
 
+#define FORCE_NKRO
+
 #define PERMISSIVE_HOLD
 
 #define ONESHOT_TAP_TOGGLE 2
