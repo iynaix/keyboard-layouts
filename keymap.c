@@ -31,19 +31,15 @@ enum {
 enum {
   // next track and prev track
   TD_NEXT_PREV_TRACK = 0,
-  // left and right paren
-  TD_PARENS,
-  // left and right square brackets
-  TD_BRACKETS,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [BASE] = KEYMAP(
     // left hand
     KC_GRAVE, KC_1, KC_2, KC_3, KC_4, KC_5, LCTL(KC_S),
-    KC_EQUAL, KC_Q, KC_W, LT(1, KC_E), LT(2, KC_R), KC_T, TD(TD_BRACKETS),
+    KC_EQUAL, KC_Q, KC_W, LT(1, KC_E), LT(2, KC_R), KC_T, KC_LBRACKET,
     KC_UNDS, SFT_T(KC_A), CTL_T(KC_S), ALT_T(KC_D), GUI_T(KC_F), KC_G,
-    OSM(MOD_LSFT), KC_Z, KC_X, KC_C, KC_V, KC_B, TD(TD_PARENS),
+    OSM(MOD_LSFT), KC_Z, KC_X, KC_C, KC_V, KC_B, KC_LPRN,
     OSM(MOD_LCTL), GUI_T(KC_HOME), ALT_T(KC_END), KC_LEFT, KC_RIGHT,
 
     LCTL(KC_C), LCTL(KC_V),
@@ -167,10 +163,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 qk_tap_dance_action_t tap_dance_actions[] = {
   // Tap once for next track, twice for prev track
   [TD_NEXT_PREV_TRACK]  = ACTION_TAP_DANCE_DOUBLE(KC_MEDIA_NEXT_TRACK, KC_MEDIA_PREV_TRACK),
-  // Tap once for left paren, twice for right paren
-  [TD_PARENS]  = ACTION_TAP_DANCE_DOUBLE(KC_LEFT_PAREN, KC_RIGHT_PAREN),
-  // Tap once for left square bracket, twice for right square bracket
-  [TD_BRACKETS]  = ACTION_TAP_DANCE_DOUBLE(KC_LBRC, KC_RBRC),
 };
 
 // Runs just one time when the keyboard initializes.
