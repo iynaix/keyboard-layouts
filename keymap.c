@@ -10,7 +10,7 @@
 
 #define TAP_UNICODE(code)                       \
   unicode_input_start();                        \
-  register_hex(0x51F8);                         \
+  register_hex(code);                           \
   unicode_input_finish()
 
 enum custom_keycodes {
