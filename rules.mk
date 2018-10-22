@@ -1,4 +1,5 @@
 NKRO_ENABLE = yes
 FORCE_NKRO = yes
 
+LEADER_ENABLE = yes
 TAP_DANCE_ENABLE = yes

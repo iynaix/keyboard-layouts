@@ -13,6 +13,8 @@
   register_hex(code);                           \
   unicode_input_finish()
 
+#define _______ KC_TRNS
+
 enum custom_keycodes {
   PLACEHOLDER = SAFE_RANGE, // can always be here
   EPRM,
@@ -51,7 +53,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     GUI_T(KC_RBRACKET), KC_Y, KC_U, KC_I, KC_O, KC_P, KC_MINUS,
     KC_H, KC_J, KC_K, KC_L, KC_SCOLON, KC_QUOTE,
     KC_RPRN, KC_N, KC_M, KC_COMMA, KC_DOT, KC_SLASH, OSM(MOD_LSFT),
-    KC_UP, KC_DOWN, KC_PGUP, KC_PGDOWN, LALT(KC_TAB),
+    KC_UP, KC_DOWN, KC_PGUP, KC_PGDOWN, LCTL(LSFT(KC_P)),
 
     TG(1), TG(2),
     KC_LEAD,
@@ -60,50 +62,50 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [NUMPAD] = LAYOUT_ergodox(
      // left hand
-     KC_TRNS, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F11,
-     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_MEDIA_PLAY_PAUSE,
-     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, TD(TD_NEXT_PREV_TRACK),
-     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+     _______, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F11,
+     _______, _______, _______, _______, _______, _______, KC_MEDIA_PLAY_PAUSE,
+     _______, _______, _______, _______, _______, _______,
+     _______, _______, _______, _______, _______, _______, TD(TD_NEXT_PREV_TRACK),
+     _______, _______, _______, _______, _______,
 
-     KC_TRNS, KC_TRNS,
-     KC_TRNS,
-     KC_TRNS, KC_TRNS, KC_TRNS,
+     _______, _______,
+     _______,
+     _______, _______, _______,
 
      // right hand
      KC_F12, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_PSCREEN,
-     KC_TRNS, KC_KP_7, KC_8, KC_9, KC_KP_PLUS, KC_TRNS, KC_TRNS,
-     KC_KP_4, KC_5, KC_6, KC_MINUS, KC_TRNS, KC_TRNS,
-     KC_EQUAL, KC_KP_1, KC_2, KC_3, KC_ASTR, KC_TRNS, KC_TRNS,
-     KC_KP_0, KC_DOT, KC_KP_SLASH, KC_TRNS, KC_TRNS,
+     _______, KC_KP_7, KC_8, KC_9, KC_KP_PLUS, _______, _______,
+     KC_KP_4, KC_5, KC_6, KC_MINUS, _______, _______,
+     KC_EQUAL, KC_KP_1, KC_2, KC_3, KC_ASTR, _______, _______,
+     KC_KP_0, KC_DOT, KC_KP_SLASH, _______, _______,
 
-     KC_TRNS, KC_TRNS,
-     KC_TRNS,
-     KC_TRNS, KC_TRNS, KC_TRNS
+     _______, _______,
+     _______,
+     _______, _______, _______
   ),
 
   [MOUSE] = LAYOUT_ergodox(
     // left hand
-    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-    KC_TRNS, KC_TRNS, KC_TRNS, LGUI(KC_UP), KC_TRNS, KC_TRNS, KC_TRNS,
-    KC_TRNS, LSFT(LGUI(KC_LEFT)), LGUI(KC_LEFT), LGUI(KC_DOWN), LGUI(KC_RIGHT), LSFT(LGUI(KC_RIGHT)),
-    KC_TRNS, MEH(KC_LEFT), LCTL(LALT(KC_LEFT)), KC_TRNS, LCTL(LALT(KC_RIGHT)), MEH(KC_RIGHT), KC_TRNS,
-    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+    _______, _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, LGUI(KC_UP), _______, _______, _______,
+    _______, LSFT(LGUI(KC_LEFT)), LGUI(KC_LEFT), LGUI(KC_DOWN), LGUI(KC_RIGHT), LSFT(LGUI(KC_RIGHT)),
+    _______, MEH(KC_LEFT), LCTL(LALT(KC_LEFT)), _______, LCTL(LALT(KC_RIGHT)), MEH(KC_RIGHT), _______,
+    _______, _______, _______, _______, _______,
 
-    KC_TRNS, KC_TRNS,
-    KC_TRNS,
-    KC_TRNS, KC_TRNS, KC_TRNS,
+    _______, _______,
+    _______,
+    _______, _______, _______,
 
     // right hand
-    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-    KC_TRNS, KC_TRNS, KC_MS_BTN1, KC_MS_UP, KC_MS_BTN2, KC_TRNS, KC_TRNS,
-    KC_TRNS, KC_MS_LEFT, KC_MS_DOWN, KC_MS_RIGHT, KC_TRNS, KC_TRNS,
-    KC_TRNS, KC_TRNS, KC_TRNS, KC_MS_BTN3, KC_TRNS, KC_UP, KC_TRNS,
-    KC_TRNS, KC_TRNS, KC_LEFT, KC_DOWN, KC_RIGHT,
+    _______, _______, _______, _______, _______, _______, _______,
+    _______, _______, KC_MS_BTN1, KC_MS_UP, KC_MS_BTN2, _______, _______,
+    _______, KC_MS_LEFT, KC_MS_DOWN, KC_MS_RIGHT, _______, _______,
+    _______, _______, _______, KC_MS_BTN3, _______, KC_UP, _______,
+    _______, _______, KC_LEFT, KC_DOWN, KC_RIGHT,
 
-    KC_TRNS, KC_TRNS,
-    KC_TRNS,
-    KC_TRNS, KC_TRNS, KC_TRNS
+    _______, _______,
+    _______,
+    _______, _______, _______
   ),
 };
 
@@ -182,36 +184,19 @@ void matrix_scan_user(void) {
         ((get_oneshot_mods() & MOD_BIT(KC_LSFT)) && !has_oneshot_mods_timed_out())) {
       ergodox_right_led_1_set (LED_BRIGHTNESS_HI);
       ergodox_right_led_1_on ();
-    } else {
-      /*
-      ergodox_right_led_1_set (LED_BRIGHTNESS_LO);
-      if (layer != NMDIA && layer != PLVR && layer != ADORE && !is_arrow)
-        ergodox_right_led_1_off ();
-      */
     }
 
     if (keyboard_report->mods & MOD_BIT(KC_LALT) ||
         ((get_oneshot_mods() & MOD_BIT(KC_LALT)) && !has_oneshot_mods_timed_out())) {
       ergodox_right_led_2_set (LED_BRIGHTNESS_HI);
       ergodox_right_led_2_on ();
-    } else {
-      /*
-      ergodox_right_led_2_set (LED_BRIGHTNESS_LO);
-      if (layer != HUN && layer != NMDIA && layer != PLVR && layer != ADORE)
-        ergodox_right_led_2_off ();
-      */
     }
 
     if (keyboard_report->mods & MOD_BIT(KC_LCTRL) ||
         ((get_oneshot_mods() & MOD_BIT(KC_LCTRL)) && !has_oneshot_mods_timed_out())) {
       ergodox_right_led_3_set (LED_BRIGHTNESS_HI);
       ergodox_right_led_3_on ();
-    } else {
-      /*
-      ergodox_right_led_3_set (LED_BRIGHTNESS_LO);
-      if (layer != HUN && layer != PLVR && layer != ADORE && !is_arrow)
-        ergodox_right_led_3_off ();
-      */}
+    }
 
     // set LEDs for layers
     ergodox_board_led_off();
@@ -307,21 +292,6 @@ void matrix_scan_user(void) {
         TAP_UNICODE(0x253b);
         TAP_UNICODE(0x2501);
         TAP_UNICODE(0x253b);
-      }
-
-      // ul: set unicode mode for linux
-      SEQ_TWO_KEYS (KC_U, KC_L) {
-        set_unicode_input_mode(UC_LNX);
-      }
-
-      // um: set unicode mode for mac
-      SEQ_TWO_KEYS (KC_U, KC_M) {
-        set_unicode_input_mode(UC_OSX);
-      }
-
-      // uw: set unicode mode for windows (requires WinCompose)
-      SEQ_TWO_KEYS (KC_U, KC_W) {
-        set_unicode_input_mode(UC_WINC);
       }
     }
 };
