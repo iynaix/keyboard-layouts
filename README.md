@@ -11,7 +11,7 @@ Some of the things in the layout only work under Linux.
 
 ## Base Layer
 
-[![Base layer](https://github.com/iynaix/ergodox-layout/raw/master/images/base.png)](http://www.keyboard-layout-editor.com/#/gists/121345505ed2f8dfb2f0733407c08076)
+[![Base layer](./images/base.png)](http://www.keyboard-layout-editor.com/#/gists/121345505ed2f8dfb2f0733407c08076)
 
 -   The red `Shift` and `Ctrl` modifiers are one-shot. When tapped, they are considered active for the next key press only. When double tapped, they toggle on, until a third, single tap sometime later. When held, they act as expected.
 -   The blue `Shift`, `Ctrl`, `Alt` and `Win` modifiers are mod-tap keys. When tapped, they perform as expected. When held, they function as the respective modifiers.
@@ -30,13 +30,13 @@ Some of the things in the layout only work under Linux.
 
 ## Numpad Layer
 
-[![Numpad layer](https://github.com/iynaix/ergodox-layout/raw/master/images/numpad.png)](http://www.keyboard-layout-editor.com/#/gists/121345505ed2f8dfb2f0733407c08076)
+[![Numpad layer](./images/numpad.png)](http://www.keyboard-layout-editor.com/#/gists/121345505ed2f8dfb2f0733407c08076)
 
 -   The green `Next` and `Prev` key produces a `Media Next` when single tapped and `Media Prev` when double-tapped.
 
 ## Navigation Layer
 
-[![Navigation layer](https://github.com/iynaix/ergodox-layout/raw/master/images/navigation.png)](http://www.keyboard-layout-editor.com/#/gists/e210f0b9dc6951748a4aa7511688b79e)
+[![Navigation layer](./images/navigation.png)](http://www.keyboard-layout-editor.com/#/gists/e210f0b9dc6951748a4aa7511688b79e)
 
 Contains keys for navigation by mouse and a set of arrow keys oriented in the regular fashion.
 
