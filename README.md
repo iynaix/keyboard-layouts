@@ -13,10 +13,8 @@ Some of the things in the layout only work under Linux.
 
 [![Base layer](./images/base.png)](http://www.keyboard-layout-editor.com/#/gists/121345505ed2f8dfb2f0733407c08076)
 
--   The red `Shift` and `Ctrl` modifiers are one-shot. When tapped, they are considered active for the next key press only. When double tapped, they toggle on, until a third, single tap sometime later. When held, they act as expected.
 -   The blue `Shift`, `Ctrl`, `Alt` and `Win` modifiers are mod-tap keys. When tapped, they perform as expected. When held, they function as the respective modifiers.
 -   The green keys are tap dance keys. Tap once for the top command, twice for the second command and thrice for the third command.
--   The `Esc` key also doubles as a one-shot cancel key: if tapped while any of the one-shot modifiers are in-flight (as in, single-tapped, and not expired yet), it cancels all one-shot modifiers. Otherwise it sends the usual keycode.
 -   The number keys with lower legends run the given program in conjunction with `Win`. This is done via a [custom application switcher / launcher][wintool]. E.g. `Win 6` either launches chrome or alt-tabs between currently running chrome instances
 -   The **Lead** key allows me to type in a sequence of keys, and trigger some actions:
 
