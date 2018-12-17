@@ -31,8 +31,12 @@ enum {
 
 /* Tap Dance Declarations */
 enum {
+  // copy, paste and cut
+  TD_COPY_PASTE_CUT = 0,
+  // app launcher, vscode command palette, file search
+  TD_APP_LAUNCHER_CMD_PALETTE = 1,
   // next track and prev track
-  TD_NEXT_PREV_TRACK = 0,
+  TD_NEXT_PREV_TRACK = 2,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -44,254 +48,308 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     OSM(MOD_LSFT), LT(2, KC_Z), KC_X, KC_C, KC_V, KC_B, KC_LPRN,
     OSM(MOD_LCTL), GUI_T(KC_HOME), ALT_T(KC_END), KC_LEFT, KC_RIGHT,
 
-    LCTL(KC_C), LCTL(KC_V),
-    LCTL(KC_Z),
-    KC_SPACE, KC_BSPACE, KC_DELETE,
+      TD(TD_COPY_PASTE_CUT), LCTL(KC_V),
+      LCTL(KC_Z),
+      KC_SPACE, KC_BSPACE, KC_DELETE,
 
-    // right hand
-    LGUI(KC_SPACE), KC_6, KC_7, KC_8, KC_9, KC_0, KC_BSLASH,
-    GUI_T(KC_RBRACKET), KC_Y, KC_U, KC_I, KC_O, KC_P, KC_MINUS,
-    KC_H, KC_J, KC_K, KC_L, KC_SCOLON, KC_QUOTE,
-    KC_RPRN, KC_N, KC_M, KC_COMMA, KC_DOT, KC_SLASH, OSM(MOD_LSFT),
-    KC_UP, KC_DOWN, KC_PGUP, KC_PGDOWN, LCTL(LSFT(KC_P)),
+      // right hand
+      TD(TD_APP_LAUNCHER_CMD_PALETTE), KC_6, KC_7, KC_8, KC_9, KC_0, KC_BSLASH,
+      GUI_T(KC_RBRACKET), KC_Y, KC_U, KC_I, KC_O, KC_P, KC_MINUS,
+      KC_H, KC_J, KC_K, KC_L, KC_SCOLON, KC_QUOTE,
+      KC_RPRN, KC_N, KC_M, KC_COMMA, KC_DOT, KC_SLASH, OSM(MOD_LSFT),
+      KC_UP, KC_DOWN, KC_PGUP, KC_PGDOWN, LCTL(LSFT(KC_P)),
 
-    TG(1), TG(2),
-    KC_LEAD,
-    KC_ESCAPE, KC_TAB, KC_ENTER
-  ),
+      TG(1), TG(2),
+      KC_LEAD,
+      KC_ESCAPE, KC_TAB, KC_ENTER
+    ),
 
-  [NUMPAD] = LAYOUT_ergodox(
-     // left hand
-     _______, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F11,
-     _______, _______, _______, _______, _______, _______, KC_MEDIA_PLAY_PAUSE,
-     _______, _______, _______, _______, _______, _______,
-     _______, _______, _______, _______, _______, _______, TD(TD_NEXT_PREV_TRACK),
-     _______, _______, _______, _______, _______,
+    [NUMPAD] = LAYOUT_ergodox(
+      // left hand
+      _______, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F11,
+      _______, _______, _______, _______, _______, _______, KC_MEDIA_PLAY_PAUSE,
+      _______, _______, _______, _______, _______, _______,
+      _______, _______, _______, _______, _______, _______, TD(TD_NEXT_PREV_TRACK),
+      _______, _______, _______, _______, _______,
 
-     _______, _______,
-     _______,
-     _______, _______, _______,
+      _______, _______,
+      _______,
+      _______, _______, _______,
 
-     // right hand
-     KC_F12, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_PSCREEN,
-     _______, KC_KP_7, KC_8, KC_9, KC_KP_PLUS, _______, _______,
-     KC_KP_4, KC_5, KC_6, KC_MINUS, _______, _______,
-     KC_EQUAL, KC_KP_1, KC_2, KC_3, KC_ASTR, _______, _______,
-     KC_KP_0, KC_DOT, KC_KP_SLASH, _______, _______,
+      // right hand
+      KC_F12, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_PSCREEN,
+      _______, KC_KP_7, KC_8, KC_9, KC_KP_PLUS, _______, _______,
+      KC_KP_4, KC_5, KC_6, KC_MINUS, _______, _______,
+      KC_EQUAL, KC_KP_1, KC_2, KC_3, KC_ASTR, _______, _______,
+      KC_KP_0, KC_DOT, KC_KP_SLASH, _______, _______,
 
-     _______, _______,
-     _______,
-     _______, _______, _______
-  ),
+      _______, _______,
+      _______,
+      _______, _______, _______
+    ),
 
-  [MOUSE] = LAYOUT_ergodox(
-    // left hand
-    _______, _______, _______, _______, _______, _______, _______,
-    _______, _______, _______, LGUI(KC_UP), _______, _______, _______,
-    _______, LSFT(LGUI(KC_LEFT)), LGUI(KC_LEFT), LGUI(KC_DOWN), LGUI(KC_RIGHT), LSFT(LGUI(KC_RIGHT)),
-    _______, MEH(KC_LEFT), LCTL(LALT(KC_LEFT)), _______, LCTL(LALT(KC_RIGHT)), MEH(KC_RIGHT), _______,
-    _______, _______, _______, _______, _______,
+    [MOUSE] = LAYOUT_ergodox(
+      // left hand
+      _______, _______, _______, _______, _______, _______, _______,
+      _______, _______, _______, LGUI(KC_UP), _______, _______, _______,
+      _______, LSFT(LGUI(KC_LEFT)), LGUI(KC_LEFT), LGUI(KC_DOWN), LGUI(KC_RIGHT), LSFT(LGUI(KC_RIGHT)),
+      _______, MEH(KC_LEFT), LCTL(LALT(KC_LEFT)), _______, LCTL(LALT(KC_RIGHT)), MEH(KC_RIGHT), _______,
+      _______, _______, _______, _______, _______,
 
-    _______, _______,
-    _______,
-    _______, _______, _______,
+      _______, _______,
+      _______,
+      _______, _______, _______,
 
-    // right hand
-    _______, _______, _______, _______, _______, _______, _______,
-    _______, _______, KC_MS_BTN1, KC_MS_UP, KC_MS_BTN2, _______, _______,
-    _______, KC_MS_LEFT, KC_MS_DOWN, KC_MS_RIGHT, _______, _______,
-    _______, _______, _______, KC_MS_BTN3, _______, KC_UP, _______,
-    _______, _______, KC_LEFT, KC_DOWN, KC_RIGHT,
+      // right hand
+      _______, _______, _______, _______, _______, _______, _______,
+      _______, _______, KC_MS_BTN1, KC_MS_UP, KC_MS_BTN2, _______, _______,
+      _______, KC_MS_LEFT, KC_MS_DOWN, KC_MS_RIGHT, _______, _______,
+      _______, _______, _______, KC_MS_BTN3, _______, KC_UP, _______,
+      _______, _______, KC_LEFT, KC_DOWN, KC_RIGHT,
 
-    _______, _______,
-    _______,
-    _______, _______, _______
-  ),
-};
+      _______, _______,
+      _______,
+      _______, _______, _______
+    ),
+  };
 
-const uint16_t PROGMEM fn_actions[] = {
-  [1] = ACTION_LAYER_TAP_TOGGLE(1),
-};
+  const uint16_t PROGMEM fn_actions[] = {
+    [1] = ACTION_LAYER_TAP_TOGGLE(1),
+  };
 
-// leaving this in place for compatibilty with old keymaps cloned and re-compiled.
-const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
-{
-    switch(id) {
-        case 0:
+  // leaving this in place for compatibilty with old keymaps cloned and re-compiled.
+  const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
+  {
+      switch(id) {
+          case 0:
+          if (record->event.pressed) {
+            SEND_STRING (QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
+          }
+          break;
+        }
+      return MACRO_NONE;
+  };
+
+  bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    bool queue = true;
+
+    switch (keycode) {
+      // dynamically generate these.
+      case EPRM:
+        if (record->event.pressed) {
+          eeconfig_init();
+        }
+        queue = false;
+        break;
+      case VRSN:
         if (record->event.pressed) {
           SEND_STRING (QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
         }
-        break;
-      }
-    return MACRO_NONE;
-};
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  bool queue = true;
-
-  switch (keycode) {
-    // dynamically generate these.
-    case EPRM:
-      if (record->event.pressed) {
-        eeconfig_init();
-      }
-      queue = false;
-      break;
-    case VRSN:
-      if (record->event.pressed) {
-        SEND_STRING (QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
-      }
-      queue = false;
-      break;
-    case RGB_SLD:
-      if (record->event.pressed) {
-        rgblight_mode(1);
-      }
-      queue = false;
-      break;
-
-    // esc clears any active oneshot modifiers
-    case KC_ESC:
-      if (record->event.pressed && get_oneshot_mods() && !has_oneshot_mods_timed_out()) {
-        clear_oneshot_mods();
         queue = false;
-      }
-      break;
+        break;
+      case RGB_SLD:
+        if (record->event.pressed) {
+          rgblight_mode(1);
+        }
+        queue = false;
+        break;
+
+      // esc clears any active oneshot modifiers
+      case KC_ESC:
+        if (record->event.pressed && get_oneshot_mods() && !has_oneshot_mods_timed_out()) {
+          clear_oneshot_mods();
+          queue = false;
+        }
+        break;
+    }
+    return queue;
   }
-  return queue;
-}
 
-/* Tap Dance Definitions */
-qk_tap_dance_action_t tap_dance_actions[] = {
-  // Tap once for next track, twice for prev track
-  [TD_NEXT_PREV_TRACK]  = ACTION_TAP_DANCE_DOUBLE(KC_MEDIA_NEXT_TRACK, KC_MEDIA_PREV_TRACK),
-};
+  /* Tap Dance Definitions */
+  void copy_paste_cut(qk_tap_dance_state_t * state, void * user_data) {
+      if (state -> count == 1) {
+          // Copy (Ctrl+C)
+          register_code(KC_LCTL);
+          register_code(KC_C);
+          unregister_code(KC_C);
+          unregister_code(KC_LCTL);
+      }
+      else if (state -> count == 2) {
+          // Paste (Ctrl+V)
+          register_code(KC_LCTL);
+          register_code(KC_V);
+          unregister_code(KC_V);
+          unregister_code(KC_LCTL);
+      }
+      else if (state -> count == 3) {
+          // Cut (Ctrl+X)
+          register_code(KC_LCTL);
+          register_code(KC_X);
+          unregister_code(KC_X);
+          unregister_code(KC_LCTL);
+      }
+  }
 
-// Runs just one time when the keyboard initializes.
-void matrix_init_user(void) {
-  set_unicode_input_mode(UC_LNX);
-};
+  void app_launcher_cmd_palette(qk_tap_dance_state_t * state, void * user_data) {
+      if (state -> count == 1) {
+          // Application Launcher
+          register_code(KC_LGUI);
+          register_code(KC_SPACE);
+          unregister_code(KC_SPACE);
+          unregister_code(KC_LGUI);
+      }
+      else if (state -> count == 2) {
+          // VSCode Command Palette
+          register_code(KC_LCTL);
+          register_code(KC_LSFT);
+          register_code(KC_P);
+          unregister_code(KC_P);
+          unregister_code(KC_LSFT);
+          unregister_code(KC_LCTL);
+      }
+      else if (state -> count == 3) {
+          // VS Quick Open
+          register_code(KC_LCTL);
+          register_code(KC_P);
+          unregister_code(KC_P);
+          unregister_code(KC_LCTL);
+      }
+  }
 
-/* Setup Leader */
-LEADER_EXTERNS();
+  qk_tap_dance_action_t tap_dance_actions[] = {
+      // Tap once for copy, twice for paste, thrice for cut
+      [TD_COPY_PASTE_CUT]  = ACTION_TAP_DANCE_FN(copy_paste_cut),
+      // Tap once for app launcher, twice for vs code cmd palette, thrice for vs code quick open
+      [TD_APP_LAUNCHER_CMD_PALETTE]  = ACTION_TAP_DANCE_FN(app_launcher_cmd_palette),
+      // Tap once for next track, twice for prev track
+      [TD_NEXT_PREV_TRACK]  = ACTION_TAP_DANCE_DOUBLE(KC_MEDIA_NEXT_TRACK, KC_MEDIA_PREV_TRACK),
+  };
 
-void matrix_scan_user(void) {
+  // Runs just one time when the keyboard initializes.
+  void matrix_init_user(void) {
+      set_unicode_input_mode(UC_LNX);
+  };
 
-    uint8_t layer = biton32(layer_state);
+  /* Setup Leader */
+  LEADER_EXTERNS();
 
-    // set dimmer LEDs for modifiers
-    if (keyboard_report->mods & MOD_BIT(KC_LSFT) ||
-        ((get_oneshot_mods() & MOD_BIT(KC_LSFT)) && !has_oneshot_mods_timed_out())) {
-      ergodox_right_led_1_set (LED_BRIGHTNESS_HI);
-      ergodox_right_led_1_on ();
-    }
+  void matrix_scan_user(void) {
 
-    if (keyboard_report->mods & MOD_BIT(KC_LALT) ||
-        ((get_oneshot_mods() & MOD_BIT(KC_LALT)) && !has_oneshot_mods_timed_out())) {
-      ergodox_right_led_2_set (LED_BRIGHTNESS_HI);
-      ergodox_right_led_2_on ();
-    }
+      uint8_t layer = biton32(layer_state);
 
-    if (keyboard_report->mods & MOD_BIT(KC_LCTRL) ||
-        ((get_oneshot_mods() & MOD_BIT(KC_LCTRL)) && !has_oneshot_mods_timed_out())) {
-      ergodox_right_led_3_set (LED_BRIGHTNESS_HI);
-      ergodox_right_led_3_on ();
-    }
-
-    // set LEDs for layers
-    ergodox_board_led_off();
-    ergodox_right_led_1_off();
-    ergodox_right_led_2_off();
-    ergodox_right_led_3_off();
-    switch (layer) {
-        case 1:
-            ergodox_right_led_1_on();
-            break;
-        case 2:
-            ergodox_right_led_2_on();
-            break;
-        case 3:
-            ergodox_right_led_3_on();
-            break;
-        case 4:
-            ergodox_right_led_1_on();
-            ergodox_right_led_2_on();
-            break;
-        case 5:
-            ergodox_right_led_1_on();
-            ergodox_right_led_3_on();
-            break;
-        case 6:
-            ergodox_right_led_2_on();
-            ergodox_right_led_3_on();
-            break;
-        case 7:
-            ergodox_right_led_1_on();
-            ergodox_right_led_2_on();
-            ergodox_right_led_3_on();
-            break;
-        default:
-            break;
-    }
-
-    // leader key
-    LEADER_DICTIONARY() {
-      leading = false;
-      leader_end();
-
-      // s: shrug
-      SEQ_ONE_KEY (CTL_T(KC_S)) {
-        TAP_UNICODE(0xaf);
-        TAP_ONCE(KC_BSLS);
-        register_code(KC_RSFT); TAP_ONCE(KC_MINS); TAP_ONCE(KC_9); unregister_code(KC_RSFT);
-        TAP_UNICODE(0x30c4);
-        register_code(KC_RSFT); TAP_ONCE (KC_0); TAP_ONCE(KC_MINS); unregister_code(KC_RSFT);
-        TAP_ONCE(KC_SLSH);
-        TAP_UNICODE(0xaf);
+      // set dimmer LEDs for modifiers
+      if (keyboard_report->mods & MOD_BIT(KC_LSFT) ||
+          ((get_oneshot_mods() & MOD_BIT(KC_LSFT)) && !has_oneshot_mods_timed_out())) {
+        ergodox_right_led_1_set (LED_BRIGHTNESS_HI);
+        ergodox_right_led_1_on ();
       }
 
-      // y: \o/
-      SEQ_ONE_KEY (KC_Y) {
-        SEND_STRING("\\o/");
+      if (keyboard_report->mods & MOD_BIT(KC_LALT) ||
+          ((get_oneshot_mods() & MOD_BIT(KC_LALT)) && !has_oneshot_mods_timed_out())) {
+        ergodox_right_led_2_set (LED_BRIGHTNESS_HI);
+        ergodox_right_led_2_on ();
       }
 
-      // f: middle fingers
-      SEQ_ONE_KEY (GUI_T(KC_F)) {
-        TAP_UNICODE(0x51F8);
-        register_code (KC_RSFT); TAP_ONCE (KC_9); unregister_code(KC_RSFT);
-        TAP_UNICODE(0x30c4);
-        register_code (KC_RSFT); TAP_ONCE (KC_0); unregister_code(KC_RSFT);
-        TAP_UNICODE(0x51F8);
+      if (keyboard_report->mods & MOD_BIT(KC_LCTRL) ||
+          ((get_oneshot_mods() & MOD_BIT(KC_LCTRL)) && !has_oneshot_mods_timed_out())) {
+        ergodox_right_led_3_set (LED_BRIGHTNESS_HI);
+        ergodox_right_led_3_on ();
       }
 
-      // l: lenny face
-      SEQ_ONE_KEY (CTL_T(KC_L)) {
-        register_code(KC_RSFT); TAP_ONCE(KC_9); unregister_code(KC_RSFT); TAP_ONCE(KC_SPACE);
-        TAP_UNICODE(0x361);
-        TAP_UNICODE(0xb0);
-        TAP_ONCE(KC_SPACE);
-        TAP_UNICODE(0x35c);
-        TAP_UNICODE(0x296);
-        TAP_ONCE(KC_SPACE);
-        TAP_UNICODE(0x361);
-        TAP_UNICODE(0xb0);
-        register_code(KC_RSFT); TAP_ONCE (KC_0); unregister_code(KC_RSFT);
+      // set LEDs for layers
+      ergodox_board_led_off();
+      ergodox_right_led_1_off();
+      ergodox_right_led_2_off();
+      ergodox_right_led_3_off();
+      switch (layer) {
+          case 1:
+              ergodox_right_led_1_on();
+              break;
+          case 2:
+              ergodox_right_led_2_on();
+              break;
+          case 3:
+              ergodox_right_led_3_on();
+              break;
+          case 4:
+              ergodox_right_led_1_on();
+              ergodox_right_led_2_on();
+              break;
+          case 5:
+              ergodox_right_led_1_on();
+              ergodox_right_led_3_on();
+              break;
+          case 6:
+              ergodox_right_led_2_on();
+              ergodox_right_led_3_on();
+              break;
+          case 7:
+              ergodox_right_led_1_on();
+              ergodox_right_led_2_on();
+              ergodox_right_led_3_on();
+              break;
+          default:
+              break;
       }
 
-      // t: table flip
-      SEQ_ONE_KEY (KC_T) {
-        register_code(KC_RSFT); TAP_ONCE(KC_9); unregister_code(KC_RSFT);
-        TAP_UNICODE(0x256f);
-        TAP_UNICODE(0xb0);
-        TAP_UNICODE(0x25a1);
-        TAP_UNICODE(0xb0);
-        TAP_UNICODE(0xff09);
-        TAP_UNICODE(0x256f);
-        TAP_UNICODE(0xfe35);
-        TAP_ONCE(KC_SPACE);
-        TAP_UNICODE(0x253b);
-        TAP_UNICODE(0x2501);
-        TAP_UNICODE(0x253b);
+      // leader key
+      LEADER_DICTIONARY() {
+        leading = false;
+        leader_end();
+
+        // s: shrug
+        SEQ_ONE_KEY (CTL_T(KC_S)) {
+          TAP_UNICODE(0xaf);
+          TAP_ONCE(KC_BSLS);
+          register_code(KC_RSFT); TAP_ONCE(KC_MINS); TAP_ONCE(KC_9); unregister_code(KC_RSFT);
+          TAP_UNICODE(0x30c4);
+          register_code(KC_RSFT); TAP_ONCE (KC_0); TAP_ONCE(KC_MINS); unregister_code(KC_RSFT);
+          TAP_ONCE(KC_SLSH);
+          TAP_UNICODE(0xaf);
+        }
+
+        // y: \o/
+        SEQ_ONE_KEY (KC_Y) {
+          SEND_STRING("\\o/");
+        }
+
+        // f: middle fingers
+        SEQ_ONE_KEY (GUI_T(KC_F)) {
+          TAP_UNICODE(0x51F8);
+          register_code (KC_RSFT); TAP_ONCE (KC_9); unregister_code(KC_RSFT);
+          TAP_UNICODE(0x30c4);
+          register_code (KC_RSFT); TAP_ONCE (KC_0); unregister_code(KC_RSFT);
+          TAP_UNICODE(0x51F8);
+        }
+
+        // l: lenny face
+        SEQ_ONE_KEY (CTL_T(KC_L)) {
+          register_code(KC_RSFT); TAP_ONCE(KC_9); unregister_code(KC_RSFT); TAP_ONCE(KC_SPACE);
+          TAP_UNICODE(0x361);
+          TAP_UNICODE(0xb0);
+          TAP_ONCE(KC_SPACE);
+          TAP_UNICODE(0x35c);
+          TAP_UNICODE(0x296);
+          TAP_ONCE(KC_SPACE);
+          TAP_UNICODE(0x361);
+          TAP_UNICODE(0xb0);
+          register_code(KC_RSFT); TAP_ONCE (KC_0); unregister_code(KC_RSFT);
+        }
+
+        // t: table flip
+        SEQ_ONE_KEY (KC_T) {
+          register_code(KC_RSFT); TAP_ONCE(KC_9); unregister_code(KC_RSFT);
+          TAP_UNICODE(0x256f);
+          TAP_UNICODE(0xb0);
+          TAP_UNICODE(0x25a1);
+          TAP_UNICODE(0xb0);
+          TAP_UNICODE(0xff09);
+          TAP_UNICODE(0x256f);
+          TAP_UNICODE(0xfe35);
+          TAP_ONCE(KC_SPACE);
+          TAP_UNICODE(0x253b);
+          TAP_UNICODE(0x2501);
+          TAP_UNICODE(0x253b);
+        }
       }
-    }
-};
+  };
