@@ -31,14 +31,12 @@ enum {
 
 /* Tap Dance Declarations */
 enum {
-  // copy, paste and cut
-  TD_COPY_PASTE_CUT = 0,
   // save, undo, redo
-  TD_SAVE_UNDO_REDO = 1,
+  TD_SAVE_UNDO_REDO = 0,
   // app launcher, vscode command palette, file search
-  TD_APP_LAUNCHER_CMD_PALETTE = 2,
+  TD_APP_LAUNCHER_CMD_PALETTE = 1,
   // next track and prev track
-  TD_NEXT_PREV_TRACK = 3,
+  TD_NEXT_PREV_TRACK = 2,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -50,8 +48,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_LSFT, LT(2, KC_Z), KC_X, KC_C, KC_V, KC_B, KC_LPRN,
       KC_LCTL, GUI_T(KC_HOME), ALT_T(KC_END), KC_LEFT, KC_RIGHT,
 
-      KC_DELETE, TD(TD_COPY_PASTE_CUT),
-      LCTL(KC_Z),
+      KC_DELETE, LCTL(KC_C),
+      LCTL(KC_V),
       KC_SPACE, KC_BSPACE, KC_ESC,
 
       // right hand
@@ -160,30 +158,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   }
 
   /* Tap Dance Definitions */
-  void copy_paste_cut(qk_tap_dance_state_t * state, void * user_data) {
-      if (state -> count == 1) {
-          // Copy (Ctrl+C)
-          register_code(KC_LCTL);
-          register_code(KC_C);
-          unregister_code(KC_C);
-          unregister_code(KC_LCTL);
-      }
-      else if (state -> count == 2) {
-          // Paste (Ctrl+V)
-          register_code(KC_LCTL);
-          register_code(KC_V);
-          unregister_code(KC_V);
-          unregister_code(KC_LCTL);
-      }
-      else if (state -> count == 3) {
-          // Cut (Ctrl+X)
-          register_code(KC_LCTL);
-          register_code(KC_X);
-          unregister_code(KC_X);
-          unregister_code(KC_LCTL);
-      }
-  }
-
   void save_undo_redo(qk_tap_dance_state_t * state, void * user_data) {
       if (state -> count == 1) {
           // Save (Ctrl+S)
@@ -235,8 +209,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   }
 
   qk_tap_dance_action_t tap_dance_actions[] = {
-      // Tap once for copy, twice for paste, thrice for cut
-      [TD_COPY_PASTE_CUT]  = ACTION_TAP_DANCE_FN(copy_paste_cut),
       // Tap once for save, twice for undo, thrice for redo
       [TD_SAVE_UNDO_REDO]  = ACTION_TAP_DANCE_FN(save_undo_redo),
       // Tap once for app launcher, twice for vs code cmd palette, thrice for vs code quick open
