@@ -33,20 +33,22 @@ enum {
 enum {
   // copy, paste and cut
   TD_COPY_PASTE_CUT = 0,
+  // save, undo, redo
+  TD_SAVE_UNDO_REDO = 1,
   // app launcher, vscode command palette, file search
-  TD_APP_LAUNCHER_CMD_PALETTE = 1,
+  TD_APP_LAUNCHER_CMD_PALETTE = 2,
   // next track and prev track
-  TD_NEXT_PREV_TRACK = 2,
+  TD_NEXT_PREV_TRACK = 3,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  [BASE] = LAYOUT_ergodox(
-    // left hand
-    KC_GRAVE, KC_1, KC_2, KC_3, KC_4, KC_5, LCTL(KC_S),
-    KC_EQUAL, LT(1, KC_Q), KC_W, KC_E, KC_R, KC_T, KC_LBRACKET,
-    KC_UNDS, SFT_T(KC_A), CTL_T(KC_S), ALT_T(KC_D), GUI_T(KC_F), KC_G,
-    OSM(MOD_LSFT), LT(2, KC_Z), KC_X, KC_C, KC_V, KC_B, KC_LPRN,
-    OSM(MOD_LCTL), GUI_T(KC_HOME), ALT_T(KC_END), KC_LEFT, KC_RIGHT,
+    [BASE] = LAYOUT_ergodox(
+      // left hand
+      KC_GRAVE, KC_1, KC_2, KC_3, KC_4, KC_5, TD(TD_SAVE_UNDO_REDO),
+      KC_EQUAL, LT(1, KC_Q), KC_W, KC_E, KC_R, KC_T, KC_LBRACKET,
+      KC_UNDS, SFT_T(KC_A), CTL_T(KC_S), ALT_T(KC_D), GUI_T(KC_F), KC_G,
+      OSM(MOD_LSFT), LT(2, KC_Z), KC_X, KC_C, KC_V, KC_B, KC_LPRN,
+      OSM(MOD_LCTL), GUI_T(KC_HOME), ALT_T(KC_END), KC_LEFT, KC_RIGHT,
 
       TD(TD_COPY_PASTE_CUT), LCTL(KC_V),
       LCTL(KC_Z),
@@ -190,6 +192,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       }
   }
 
+  void save_undo_redo(qk_tap_dance_state_t * state, void * user_data) {
+      if (state -> count == 1) {
+          // Save (Ctrl+S)
+          register_code(KC_LCTL);
+          register_code(KC_S);
+          unregister_code(KC_S);
+          unregister_code(KC_LCTL);
+      }
+      else if (state -> count == 2) {
+          // Undo (Ctrl+Z)
+          register_code(KC_LCTL);
+          register_code(KC_Z);
+          unregister_code(KC_Z);
+          unregister_code(KC_LCTL);
+      }
+      else if (state -> count == 3) {
+          // Redo (Ctrl+Y)
+          register_code(KC_LCTL);
+          register_code(KC_Y);
+          unregister_code(KC_Y);
+          unregister_code(KC_LCTL);
+      }
+  }
+
   void app_launcher_cmd_palette(qk_tap_dance_state_t * state, void * user_data) {
       if (state -> count == 1) {
           // Application Launcher
@@ -219,6 +245,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   qk_tap_dance_action_t tap_dance_actions[] = {
       // Tap once for copy, twice for paste, thrice for cut
       [TD_COPY_PASTE_CUT]  = ACTION_TAP_DANCE_FN(copy_paste_cut),
+      // Tap once for save, twice for undo, thrice for redo
+      [TD_SAVE_UNDO_REDO]  = ACTION_TAP_DANCE_FN(save_undo_redo),
       // Tap once for app launcher, twice for vs code cmd palette, thrice for vs code quick open
       [TD_APP_LAUNCHER_CMD_PALETTE]  = ACTION_TAP_DANCE_FN(app_launcher_cmd_palette),
       // Tap once for next track, twice for prev track
