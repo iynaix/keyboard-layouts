@@ -54,14 +54,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
         // right hand
         TD(TD_APP_LAUNCHER_CMD_PALETTE), KC_6, KC_7, KC_8, KC_9, KC_0, KC_BSLASH,
-        GUI_T(KC_RBRACKET), KC_Y, KC_U, KC_I, KC_O, KC_P, KC_MINUS,
+        KC_RBRACKET, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_MINUS,
         KC_H, KC_J, KC_K, KC_L, KC_SCOLON, KC_QUOTE,
-        KC_RPRN, KC_N, KC_M, KC_COMMA, KC_DOT, KC_SLASH, KC_LSFT,
+        KC_RPRN, KC_N, KC_M, KC_COMMA, KC_DOT, KC_SLASH, SFT_T(KC_DOT),
         KC_UP, KC_DOWN, KC_PGUP, KC_PGDOWN, KC_HYPR,
 
         TG(1), TG(2),
         KC_LEAD,
-        KC_DEL, KC_TAB, KC_ENTER),
+        KC_ESC, KC_TAB, KC_ENTER),
 
     [NUMPAD] = LAYOUT_ergodox(
         // left hand
@@ -89,9 +89,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [MOUSE] = LAYOUT_ergodox(
         // left hand
         _______, _______, _______, _______, _______, _______, _______,
-        _______, _______, _______, LGUI(KC_UP), _______, _______, _______,
-        _______, LSFT(LGUI(KC_LEFT)), LGUI(KC_LEFT), LGUI(KC_DOWN), LGUI(KC_RIGHT), LSFT(LGUI(KC_RIGHT)),
-        _______, MEH(KC_LEFT), LCTL(LALT(KC_LEFT)), _______, LCTL(LALT(KC_RIGHT)), MEH(KC_RIGHT), _______,
+        _______, _______, LCTL(LALT(KC_LEFT)),  _______, LCTL(LALT(KC_RIGHT)), _______, _______,
+        _______, _______, LSFT(LGUI(KC_LEFT)), _______, LSFT(LGUI(KC_RIGHT)), _______,
+        _______, _______, MEH(KC_LEFT), _______,  MEH(KC_RIGHT), _______, _______,
         _______, _______, _______, _______, _______,
 
         _______, _______,
@@ -205,8 +205,8 @@ void app_launcher_cmd_palette(qk_tap_dance_state_t* state, void* user_data)
 }
 
 qk_tap_dance_action_t tap_dance_actions[] = {
-        // Tap once for save, twice for undo, thrice for redo
-        [TD_SAVE_UNDO_REDO] = ACTION_TAP_DANCE_FN(save_undo_redo),
+    // Tap once for save, twice for undo, thrice for redo
+    [TD_SAVE_UNDO_REDO] = ACTION_TAP_DANCE_FN(save_undo_redo),
     // Tap once for app launcher, twice for vs code cmd palette, thrice for vs code quick open
     [TD_APP_LAUNCHER_CMD_PALETTE] = ACTION_TAP_DANCE_FN(app_launcher_cmd_palette),
     // Tap once for next track, twice for prev track
@@ -224,7 +224,6 @@ LEADER_EXTERNS();
 
 void matrix_scan_user(void)
 {
-
     uint8_t layer = biton32(layer_state);
 
     // set LEDs for layers

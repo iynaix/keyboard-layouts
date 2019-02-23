@@ -1,11 +1,8 @@
 # iynaix's layout
 
-My layout for the [ErgoDox EZ][ez], heavily inspired by [Algernon's Layout][algernon-layout]
+My layout for the [ErgoDox EZ][ez].
 
 [ez]: https://ergodox-ez.com/
-[algernon-layout]: https://github.com/algernon/ergodox-layout
-
-Some of the things in the layout only work under Linux.
 
 # Layouts
 
@@ -15,17 +12,13 @@ Some of the things in the layout only work under Linux.
 
 -   The blue `Shift`, `Ctrl`, `Alt` and `Win` modifiers are mod-tap keys. When tapped, they perform as expected. When held, they function as the respective modifiers.
 -   The green keys are tap dance keys. Tap once for the top command, twice for the second command and thrice for the third command.
--   The number keys with lower legends run the given program in conjunction with `Win`. This is done via a [custom application switcher / launcher][wintool]. E.g. `Win 6` either launches chrome or alt-tabs between currently running chrome instances
--   The **Lead** key allows me to type in a sequence of keys, and trigger some actions:
+-   The **Lead** key allows me to type in a sequence of keys (linux only), and trigger some actions:
 
     -   `LEAD s` types `¯\_(ツ)_/¯`
     -   `LEAD y` types `\o/`.
     -   `LEAD f` types `凸(ツ)凸`.
     -   `LEAD l` types `( ͡° ͜ʖ ͡°)`.
     -   `LEAD t` types `(╯°□°）╯︵ ┻━┻`.
-
-    [wintool]: https://github.com/iynaix/dotfiles/blob/master/bin/wintool
-    [wincompose]: https://github.com/samhocevar/wincompose
 
 ## Numpad Layer
 
