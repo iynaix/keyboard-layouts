@@ -12,6 +12,7 @@ My layout for the [ErgoDox EZ][ez].
 
 -   The blue `Shift`, `Ctrl`, `Alt` and `Win` modifiers are mod-tap keys. When tapped, they perform as expected. When held, they function as the respective modifiers.
 -   The green keys are tap dance keys. Tap once for the top command, twice for the second command and thrice for the third command.
+-   The green layer switch key switches to the base layer on a single tap or hold, the numpad layer on 2 taps, and the navigation layer on 3 taps.
 -   The **Lead** key allows me to type in a sequence of keys (linux only), and trigger some actions:
 
     -   `LEAD s` types `¯\_(ツ)_/¯`

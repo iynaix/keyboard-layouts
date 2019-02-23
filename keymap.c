@@ -24,7 +24,7 @@ enum custom_keycodes {
 
 /* Layer Names */
 enum {
-    BASE = 0,
+    BASE,
     NUMPAD,
     MOUSE,
 };
@@ -32,11 +32,13 @@ enum {
 /* Tap Dance Declarations */
 enum {
     // save, undo, redo
-    TD_SAVE_UNDO_REDO = 0,
+    TD_SAVE_UNDO_REDO,
     // app launcher, vscode command palette, file search
-    TD_APP_LAUNCHER_CMD_PALETTE = 1,
+    TD_APP_LAUNCHER_CMD_PALETTE,
     // next track and prev track
-    TD_NEXT_PREV_TRACK = 2,
+    TD_NEXT_PREV_TRACK,
+    // switching layers with a single key
+    TD_LAYER_SWITCH,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -57,7 +59,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_RBRACKET, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_MINUS,
         KC_H, KC_J, KC_K, KC_L, KC_SCOLON, KC_QUOTE,
         KC_RPRN, KC_N, KC_M, KC_COMMA, KC_DOT, KC_SLASH, SFT_T(KC_DOT),
-        KC_UP, KC_DOWN, KC_PGUP, KC_PGDOWN, KC_HYPR,
+        KC_UP, KC_DOWN, KC_PGUP, KC_PGDOWN, TD(TD_LAYER_SWITCH),
 
         TG(1), TG(2),
         KC_LEAD,
@@ -68,8 +70,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F11,
         _______, _______, _______, _______, _______, _______, KC_MEDIA_PLAY_PAUSE,
         _______, _______, _______, _______, _______, _______,
-        _______, _______, _______, _______, _______, _______, TD(TD_NEXT_PREV_TRACK),
-        _______, _______, _______, _______, _______,
+        _______, _______, _______, KC_UP, _______, _______, TD(TD_NEXT_PREV_TRACK),
+        _______, _______, KC_LEFT, KC_DOWN, KC_RIGHT,
 
         _______, _______,
         _______,
@@ -102,8 +104,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______, _______, _______, _______, _______,
         _______, _______, KC_MS_BTN1, KC_MS_UP, KC_MS_BTN2, _______, _______,
         _______, KC_MS_LEFT, KC_MS_DOWN, KC_MS_RIGHT, _______, _______,
-        _______, _______, _______, KC_MS_BTN3, _______, KC_UP, _______,
-        _______, _______, KC_LEFT, KC_DOWN, KC_RIGHT,
+        _______, _______, _______, KC_MS_BTN3, _______, _______, _______,
+        _______, _______, _______, _______, _______,
 
         _______, _______,
         _______,
@@ -204,6 +206,22 @@ void app_launcher_cmd_palette(qk_tap_dance_state_t* state, void* user_data)
     }
 }
 
+void layer_switch_key(qk_tap_dance_state_t *state, void *user_data) {
+    if (state->count == 2) {
+        layer_on(NUMPAD);        //define double tap here
+    }
+    else {
+        layer_off(NUMPAD);       //define single tap or hold here
+    }
+    if (state->count == 3) {
+        layer_on(MOUSE);       //define triple tap here
+    }
+    else {
+        layer_off(MOUSE);       //define single tap or hold here
+        reset_tap_dance (state);
+    }
+}
+
 qk_tap_dance_action_t tap_dance_actions[] = {
     // Tap once for save, twice for undo, thrice for redo
     [TD_SAVE_UNDO_REDO] = ACTION_TAP_DANCE_FN(save_undo_redo),
@@ -211,6 +229,8 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_APP_LAUNCHER_CMD_PALETTE] = ACTION_TAP_DANCE_FN(app_launcher_cmd_palette),
     // Tap once for next track, twice for prev track
     [TD_NEXT_PREV_TRACK] = ACTION_TAP_DANCE_DOUBLE(KC_MEDIA_NEXT_TRACK, KC_MEDIA_PREV_TRACK),
+    // Tap once for base layer, twice for numpad, three taps for mouse layer
+    [TD_LAYER_SWITCH] = ACTION_TAP_DANCE_FN(layer_switch_key)
 };
 
 // Runs just one time when the keyboard initializes.
