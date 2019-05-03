@@ -46,8 +46,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         // left hand
         KC_GRAVE, KC_1, KC_2, KC_3, KC_4, KC_5, TD(TD_SAVE_UNDO_REDO),
         KC_EQUAL, LT(1, KC_Q), KC_W, KC_E, KC_R, KC_T, KC_LBRACKET,
-        KC_UNDS, SFT_T(KC_A), CTL_T(KC_S), ALT_T(KC_D), GUI_T(KC_F), KC_G,
-        KC_LSFT, LT(2, KC_Z), KC_X, KC_C, KC_V, KC_B, GUI_T(KC_LPRN),
+        GUI_T(KC_TAB), KC_A, SFT_T(KC_S), CTL_T(KC_D), ALT_T(KC_F), KC_G,
+        KC_LSFT, LT(2, KC_Z), KC_X, KC_C, KC_V, KC_B, KC_LPRN,
         KC_LCTL, GUI_T(KC_HOME), ALT_T(KC_END), KC_LEFT, KC_RIGHT,
 
         KC_DELETE, LCTL(KC_C),
@@ -57,13 +57,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         // right hand
         TD(TD_APP_LAUNCHER_CMD_PALETTE), KC_6, KC_7, KC_8, KC_9, KC_0, KC_BSLASH,
         KC_RBRACKET, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_MINUS,
-        KC_H, KC_J, KC_K, KC_L, KC_SCOLON, KC_QUOTE,
-        GUI_T(KC_RPRN), KC_N, KC_M, KC_COMMA, KC_DOT, KC_SLASH, SFT_T(KC_DOT),
+        KC_H, KC_J, KC_K, KC_L, KC_SCOLON, GUI_T(KC_QUOTE),
+        KC_RPRN, KC_N, KC_M, KC_COMMA, KC_DOT, KC_SLASH, SFT_T(KC_DOT),
         KC_UP, KC_DOWN, KC_PGUP, KC_PGDOWN, TD(TD_LAYER_SWITCH),
 
         TG(1), TG(2),
         KC_LEAD,
-        RCTL_T(KC_ESC), KC_TAB, KC_ENTER),
+        RCTL_T(KC_ESC), GUI_T(KC_TAB), KC_ENTER),
 
     [NUMPAD] = LAYOUT_ergodox(
         // left hand

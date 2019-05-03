@@ -25,8 +25,6 @@ My layout for the [ErgoDox EZ][ez].
 
 [![Numpad layer](./images/numpad.png)](http://www.keyboard-layout-editor.com/#/gists/121345505ed2f8dfb2f0733407c08076)
 
--   The green `Next` and `Prev` key produces a `Media Next` when single tapped and `Media Prev` when double-tapped.
-
 ## Navigation Layer
 
 [![Navigation layer](./images/navigation.png)](http://www.keyboard-layout-editor.com/#/gists/e210f0b9dc6951748a4aa7511688b79e)
