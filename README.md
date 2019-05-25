@@ -39,10 +39,11 @@ To build it, you will need the [QMK][qmk] firmware checked out, and this directo
 [qmk]: https://github.com/qmk/qmk_firmware
 
 ```
+
+$ git clone https://github.com/qmk/qmk_firmware.git
 $ git clone https://github.com/iynaix/ergodox-layout.git
+$ ln -s ergodox-layout qmk_firmware/layouts/community/ergodox/iynaix
 $ cd qmk_firmware
-$ git clone https://github.com/iynaix/ergodox-layout.git \
-            layouts/community/ergodox/iynaix
 $ make ergodox_ez:iynaix:hex
 $ teensy-loader-cli -v -mmcu=atmega32u4 -w ergodox_ez_iynaix.hex
 ```

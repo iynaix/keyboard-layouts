@@ -35,8 +35,6 @@ enum {
     TD_SAVE_UNDO_REDO,
     // app launcher, vscode command palette, file search
     TD_APP_LAUNCHER_CMD_PALETTE,
-    // next track and prev track
-    TD_NEXT_PREV_TRACK,
     // switching layers with a single key
     TD_LAYER_SWITCH,
 };
@@ -68,14 +66,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [NUMPAD] = LAYOUT_ergodox(
         // left hand
         _______, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F11,
-        _______, _______, _______, _______, _______, _______, KC_MEDIA_PLAY_PAUSE,
+        _______, _______, _______, _______, _______, _______, _______,
         _______, _______, _______, _______, _______, _______,
-        _______, _______, _______, KC_UP, _______, _______, TD(TD_NEXT_PREV_TRACK),
-        _______, _______, KC_LEFT, KC_DOWN, KC_RIGHT,
+        _______, _______, _______, _______, _______, _______, _______,
+        _______, KC_MEDIA_PREV_TRACK, KC_MEDIA_NEXT_TRACK, KC_MEDIA_REWIND, KC_MEDIA_FAST_FORWARD,
 
         _______, _______,
         _______,
-        _______, _______, _______,
+        KC_MEDIA_PLAY_PAUSE, _______, _______,
 
         // right hand
         KC_F12, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_PSCREEN,
@@ -91,9 +89,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [MOUSE] = LAYOUT_ergodox(
         // left hand
         _______, _______, _______, _______, _______, _______, _______,
-        _______, _______, LCTL(LALT(KC_LEFT)),  _______, LCTL(LALT(KC_RIGHT)), _______, _______,
-        _______, _______, LSFT(LGUI(KC_LEFT)), _______, LSFT(LGUI(KC_RIGHT)), _______,
-        _______, _______, MEH(KC_LEFT), _______,  MEH(KC_RIGHT), _______, _______,
+        _______, _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______,
         _______, _______, _______, _______, _______,
 
         _______, _______,
@@ -104,8 +102,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______, _______, _______, _______, _______,
         _______, _______, KC_MS_BTN1, KC_MS_UP, KC_MS_BTN2, _______, _______,
         _______, KC_MS_LEFT, KC_MS_DOWN, KC_MS_RIGHT, _______, _______,
-        _______, _______, _______, KC_MS_BTN3, _______, _______, _______,
-        _______, _______, _______, _______, _______,
+        _______, _______, _______, KC_MS_BTN3, KC_UP, _______, _______,
+        _______, KC_LEFT, KC_DOWN, KC_RIGHT, _______,
 
         _______, _______,
         _______,
@@ -179,26 +177,6 @@ void save_undo_redo(qk_tap_dance_state_t* state, void* user_data)
     }
 }
 
-void app_launcher_cmd_palette(qk_tap_dance_state_t* state, void* user_data)
-{
-    if (state->count == 1) {
-        // Application Launcher
-        register_code(KC_LGUI);
-        register_code(KC_SPACE);
-        unregister_code(KC_SPACE);
-        unregister_code(KC_LGUI);
-    }
-    else if (state->count == 2) {
-        // VSCode Command Palette
-        register_code(KC_LCTL);
-        register_code(KC_LSFT);
-        register_code(KC_P);
-        unregister_code(KC_P);
-        unregister_code(KC_LSFT);
-        unregister_code(KC_LCTL);
-    }
-}
-
 void layer_switch_key(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count == 2) {
         layer_on(NUMPAD);        //define double tap here
@@ -219,9 +197,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     // Tap once for save, twice for undo, thrice for redo
     [TD_SAVE_UNDO_REDO] = ACTION_TAP_DANCE_FN(save_undo_redo),
     // Tap once for app launcher, twice for vs code cmd palette, thrice for vs code quick open
-    [TD_APP_LAUNCHER_CMD_PALETTE] = ACTION_TAP_DANCE_FN(app_launcher_cmd_palette),
-    // Tap once for next track, twice for prev track
-    [TD_NEXT_PREV_TRACK] = ACTION_TAP_DANCE_DOUBLE(KC_MEDIA_NEXT_TRACK, KC_MEDIA_PREV_TRACK),
+    [TD_APP_LAUNCHER_CMD_PALETTE] = ACTION_TAP_DANCE_DOUBLE(LGUI(KC_D), LCTL(LSFT(KC_P))),
     // Tap once for base layer, twice for numpad, three taps for mouse layer
     [TD_LAYER_SWITCH] = ACTION_TAP_DANCE_FN(layer_switch_key)
 };
