@@ -1,0 +1,78 @@
+#!/usr/bin/env python3
+
+import argparse
+import json
+import os
+import subprocess
+from pathlib import Path
+from shutil import which
+
+def write_config(qmk_dir):
+    # write config to file
+    with open("config.json", "w") as fp:
+        json.dump({"qmk_dir": str(qmk_dir)}, fp)
+    return qmk_dir
+
+
+# locate qmk directory
+def get_qmk_dir():
+    # qmk dir is sister of this directory
+    try:
+        return write_config(Path("../qmk_firmware").resolve(strict=True))
+    except FileNotFoundError:
+        user_dir = input("Path of qmk_firmware directory: ")
+        try:
+            return write_config(Path(user_dir).resolve(strict=True))
+        except FileNotFoundError:
+            print("Invalid qmk directory provided!")
+            raise SystemExit
+
+def build_keyboard(qmk_dir, keyboard, flash=False):
+    keyboard_path = None
+    flasher = None
+
+    if keyboard == "ergodox":
+        keyboard_path = "ergodox_ez"
+        flasher = "teensy-loader-cli"
+    elif keyboard == "plaid":
+        keyboard_path = "plaid"
+        flasher = "avrdude"
+
+    if which(flasher) is None:
+        print(f"{flasher} is not installed!")
+        raise SystemExit
+
+    # TODO: insert preamble for plaid
+    # Plug in USB cable
+    # Push and hold RESET
+    # Push and hold BOOT
+    # Release RESET
+    # Release BOOT
+
+    keymap_path = qmk_dir / "keyboards" / keyboard_path / "keymaps/iynaix"
+    # create keymaps symlink if it doesnt exist
+    if not keymap_path.exists():
+        keymap_path.symlink_to(Path(f"./{keyboard}").resolve())
+
+    current_dir = os.getcwd()
+    os.chdir(qmk_dir)
+    # subprocess.run(["git", "pull", "origin", "master"])
+    subprocess.run(["make", "clean"])
+    subprocess.run(["make", f"{keyboard_path}:iynaix:flash"])
+    os.chdir(current_dir)
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Build and / or flashes qmk firmware.")
+    parser.add_argument("keyboard", choices=["ergodox", "plaid"])
+    args = parser.parse_args()
+
+    # read config from file
+    qmk_dir = None
+    try:
+        with open("config.json") as fp:
+            qmk_dir = json.load(fp)["qmk_dir"]
+    except FileNotFoundError:
+        qmk_dir = get_qmk_dir()
+
+    build_keyboard(Path(qmk_dir), args.keyboard)
