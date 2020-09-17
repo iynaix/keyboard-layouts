@@ -1,33 +1,31 @@
-#include QMK_KEYBOARD_H
+#include "ergodox_ez.h"
 #include "debug.h"
 #include "action_layer.h"
 #include "led.h"
 #include "version.h"
 
-#define TAP_ONCE(code)   \
-    register_code(code); \
-    unregister_code(code)
-
-#define TAP_UNICODE(code)  \
-    unicode_input_start(); \
-    register_hex(code);    \
-    unicode_input_finish()
-
 #define _______ KC_TRNS
 
-enum custom_keycodes {
-  RGB_SLD = EZ_SAFE_RANGE,
+enum custom_keycodes
+{
+    RGB_SLD = EZ_SAFE_RANGE,
+    KC_SHRUG,
+    KC_LENNY,
+    KC_TABLEFLIP,
 };
 
 /* Layer Names */
-enum {
+enum
+{
     BASE,
     NUMPAD,
     MOUSE,
+    MACRO_LAYER,
 };
 
 /* Tap Dance Declarations */
-enum {
+enum
+{
     // save, undo, redo
     TD_SAVE_UNDO_REDO,
     // switching layers with a single key
@@ -55,7 +53,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_UP, KC_DOWN, KC_PGUP, KC_PGDOWN, TD(TD_LAYER_SWITCH),
 
         TG(1), TG(2),
-        KC_LEAD,
+        MO(3),
         RCTL_T(KC_ESC), GUI_T(KC_TAB), KC_ENTER),
 
     [NUMPAD] = LAYOUT_ergodox(
@@ -103,38 +101,88 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______,
         _______,
         _______, _______, _______),
+
+    [MACRO_LAYER] = LAYOUT_ergodox(
+        // left hand
+        _______, _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, KC_TABLEFLIP, _______,
+        _______, _______, KC_SHRUG, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______,
+
+        _______, _______,
+        _______,
+        _______, _______, _______,
+
+        // right hand
+        _______, _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, KC_LENNY, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______,
+
+        _______, _______,
+        _______,
+        _______, _______, _______),
 };
 
-bool process_record_user(uint16_t keycode, keyrecord_t* record)
+bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
-    switch (keycode) {
-        case RGB_SLD:
-            if (record->event.pressed) {
-                rgblight_mode(1);
-            }
-            return false;
+    switch (keycode)
+    {
+    case RGB_SLD:
+        if (record->event.pressed)
+        {
+            rgblight_mode(1);
         }
+        return false;
+        break;
+    case KC_SHRUG:
+        if (record->event.pressed)
+        {
+            send_unicode_string("¯\\_(ツ)_/¯");
+        }
+        return false;
+        break;
+    case KC_LENNY:
+        if (record->event.pressed)
+        {
+            send_unicode_string("( ͡° ͜ʖ ͡°)");
+        }
+        return false;
+        break;
+    case KC_TABLEFLIP:
+        if (record->event.pressed)
+        {
+            send_unicode_string("(╯°□°）╯︵ ┻━┻");
+        }
+        return false;
+        break;
+    }
     return true;
 }
 
 /* Tap Dance Definitions */
-void save_undo_redo(qk_tap_dance_state_t* state, void* user_data)
+void save_undo_redo(qk_tap_dance_state_t *state, void *user_data)
 {
-    if (state->count == 1) {
+    if (state->count == 1)
+    {
         // Save (Ctrl+S)
         register_code(KC_LCTL);
         register_code(KC_S);
         unregister_code(KC_S);
         unregister_code(KC_LCTL);
     }
-    else if (state->count == 2) {
+    else if (state->count == 2)
+    {
         // Undo (Ctrl+Z)
         register_code(KC_LCTL);
         register_code(KC_Z);
         unregister_code(KC_Z);
         unregister_code(KC_LCTL);
     }
-    else if (state->count == 3) {
+    else if (state->count == 3)
+    {
         // Redo (Ctrl+Y)
         register_code(KC_LCTL);
         register_code(KC_Y);
@@ -143,19 +191,24 @@ void save_undo_redo(qk_tap_dance_state_t* state, void* user_data)
     }
 }
 
-void layer_switch_key(qk_tap_dance_state_t *state, void *user_data) {
-    if (state->count == 2) {
-        layer_on(NUMPAD);        //define double tap here
+void layer_switch_key(qk_tap_dance_state_t *state, void *user_data)
+{
+    if (state->count == 2)
+    {
+        layer_on(NUMPAD); //define double tap here
     }
-    else {
-        layer_off(NUMPAD);       //define single tap or hold here
+    else
+    {
+        layer_off(NUMPAD); //define single tap or hold here
     }
-    if (state->count == 3) {
-        layer_on(MOUSE);       //define triple tap here
+    if (state->count == 3)
+    {
+        layer_on(MOUSE); //define triple tap here
     }
-    else {
-        layer_off(MOUSE);       //define single tap or hold here
-        reset_tap_dance (state);
+    else
+    {
+        layer_off(MOUSE); //define single tap or hold here
+        reset_tap_dance(state);
     }
 }
 
@@ -163,139 +216,73 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     // Tap once for save, twice for undo, thrice for redo
     [TD_SAVE_UNDO_REDO] = ACTION_TAP_DANCE_FN(save_undo_redo),
     // Tap once for base layer, twice for numpad, three taps for mouse layer
-    [TD_LAYER_SWITCH] = ACTION_TAP_DANCE_FN(layer_switch_key)
-};
+    [TD_LAYER_SWITCH] = ACTION_TAP_DANCE_FN(layer_switch_key)};
 
-// Runs just one time when the keyboard initializes.
-void matrix_init_user(void)
+uint32_t layer_state_set_user(uint32_t state)
 {
-    set_unicode_input_mode(UC_LNX);
-};
 
-/* Setup Leader */
-LEADER_EXTERNS();
+    uint8_t layer = biton32(state);
 
-void matrix_scan_user(void)
-{
-    uint8_t layer = biton32(layer_state);
-
-    // set LEDs for layers
     ergodox_board_led_off();
     ergodox_right_led_1_off();
     ergodox_right_led_2_off();
     ergodox_right_led_3_off();
-    switch (layer) {
-        case 1:
-            ergodox_right_led_1_on();
-            break;
-        case 2:
-            ergodox_right_led_2_on();
-            break;
-        case 3:
-            ergodox_right_led_3_on();
-            break;
-        case 4:
-            ergodox_right_led_1_on();
-            ergodox_right_led_2_on();
-            break;
-        case 5:
-            ergodox_right_led_1_on();
-            ergodox_right_led_3_on();
-            break;
-        case 6:
-            ergodox_right_led_2_on();
-            ergodox_right_led_3_on();
-            break;
-        case 7:
-            ergodox_right_led_1_on();
-            ergodox_right_led_2_on();
-            ergodox_right_led_3_on();
-            break;
-        default:
-            break;
-    }
-
-    // leader key
-    LEADER_DICTIONARY()
+    switch (layer)
     {
-        leading = false;
-        leader_end();
-
-        // s: shrug
-        SEQ_ONE_KEY(CTL_T(KC_S))
-        {
-            TAP_UNICODE(0xaf);
-            TAP_ONCE(KC_BSLS);
-            register_code(KC_RSFT);
-            TAP_ONCE(KC_MINS);
-            TAP_ONCE(KC_9);
-            unregister_code(KC_RSFT);
-            TAP_UNICODE(0x30c4);
-            register_code(KC_RSFT);
-            TAP_ONCE(KC_0);
-            TAP_ONCE(KC_MINS);
-            unregister_code(KC_RSFT);
-            TAP_ONCE(KC_SLSH);
-            TAP_UNICODE(0xaf);
-        }
-
-        // y: \o/
-        SEQ_ONE_KEY(KC_Y)
-        {
-            SEND_STRING("\\o/");
-        }
-
-        // f: middle fingers
-        SEQ_ONE_KEY(GUI_T(KC_F))
-        {
-            TAP_UNICODE(0x51F8);
-            register_code(KC_RSFT);
-            TAP_ONCE(KC_9);
-            unregister_code(KC_RSFT);
-            TAP_UNICODE(0x30c4);
-            register_code(KC_RSFT);
-            TAP_ONCE(KC_0);
-            unregister_code(KC_RSFT);
-            TAP_UNICODE(0x51F8);
-        }
-
-        // l: lenny face
-        SEQ_ONE_KEY(CTL_T(KC_L))
-        {
-            register_code(KC_RSFT);
-            TAP_ONCE(KC_9);
-            unregister_code(KC_RSFT);
-            TAP_ONCE(KC_SPACE);
-            TAP_UNICODE(0x361);
-            TAP_UNICODE(0xb0);
-            TAP_ONCE(KC_SPACE);
-            TAP_UNICODE(0x35c);
-            TAP_UNICODE(0x296);
-            TAP_ONCE(KC_SPACE);
-            TAP_UNICODE(0x361);
-            TAP_UNICODE(0xb0);
-            register_code(KC_RSFT);
-            TAP_ONCE(KC_0);
-            unregister_code(KC_RSFT);
-        }
-
-        // t: table flip
-        SEQ_ONE_KEY(KC_T)
-        {
-            register_code(KC_RSFT);
-            TAP_ONCE(KC_9);
-            unregister_code(KC_RSFT);
-            TAP_UNICODE(0x256f);
-            TAP_UNICODE(0xb0);
-            TAP_UNICODE(0x25a1);
-            TAP_UNICODE(0xb0);
-            TAP_UNICODE(0xff09);
-            TAP_UNICODE(0x256f);
-            TAP_UNICODE(0xfe35);
-            TAP_ONCE(KC_SPACE);
-            TAP_UNICODE(0x253b);
-            TAP_UNICODE(0x2501);
-            TAP_UNICODE(0x253b);
-        }
+    case 0:
+#ifdef RGBLIGHT_COLOR_LAYER_0
+        rgblight_setrgb(RGBLIGHT_COLOR_LAYER_0);
+#endif
+        break;
+    case 1:
+        ergodox_right_led_1_on();
+#ifdef RGBLIGHT_COLOR_LAYER_1
+        rgblight_setrgb(RGBLIGHT_COLOR_LAYER_1);
+#endif
+        break;
+    case 2:
+        ergodox_right_led_2_on();
+#ifdef RGBLIGHT_COLOR_LAYER_2
+        rgblight_setrgb(RGBLIGHT_COLOR_LAYER_2);
+#endif
+        break;
+    case 3:
+        ergodox_right_led_3_on();
+#ifdef RGBLIGHT_COLOR_LAYER_3
+        rgblight_setrgb(RGBLIGHT_COLOR_LAYER_3);
+#endif
+        break;
+    case 4:
+        ergodox_right_led_1_on();
+        ergodox_right_led_2_on();
+#ifdef RGBLIGHT_COLOR_LAYER_4
+        rgblight_setrgb(RGBLIGHT_COLOR_LAYER_4);
+#endif
+        break;
+    case 5:
+        ergodox_right_led_1_on();
+        ergodox_right_led_3_on();
+#ifdef RGBLIGHT_COLOR_LAYER_5
+        rgblight_setrgb(RGBLIGHT_COLOR_LAYER_5);
+#endif
+        break;
+    case 6:
+        ergodox_right_led_2_on();
+        ergodox_right_led_3_on();
+#ifdef RGBLIGHT_COLOR_LAYER_6
+        rgblight_setrgb(RGBLIGHT_COLOR_LAYER_6);
+#endif
+        break;
+    case 7:
+        ergodox_right_led_1_on();
+        ergodox_right_led_2_on();
+        ergodox_right_led_3_on();
+#ifdef RGBLIGHT_COLOR_LAYER_7
+        rgblight_setrgb(RGBLIGHT_COLOR_LAYER_6);
+#endif
+        break;
+    default:
+        break;
     }
+    return state;
 };
