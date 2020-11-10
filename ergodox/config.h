@@ -6,8 +6,9 @@
 
 #define PERMISSIVE_HOLD
 
-// #undef DEBOUNCE
-// #define DEBOUNCE 45
+#undef DEBOUNCE
+#define DEBOUNCE 40
+// #define DEBOUNCE 30
 
 #define ONESHOT_TAP_TOGGLE 2
 #define ONESHOT_TIMEOUT 3000

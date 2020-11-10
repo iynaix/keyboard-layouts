@@ -104,7 +104,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [MACRO_LAYER] = LAYOUT_ergodox(
         // left hand
-        _______, _______, _______, _______, _______, _______, _______,
+        _______, KC_F13, KC_F14, KC_F15, KC_F16, KC_F17, KC_F18,
         _______, _______, _______, _______, _______, KC_TABLEFLIP, _______,
         _______, _______, KC_SHRUG, _______, _______, _______,
         _______, _______, _______, _______, _______, _______, _______,
@@ -115,7 +115,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______,
 
         // right hand
-        _______, _______, _______, _______, _______, _______, _______,
+        KC_F19, KC_F20, KC_F21, KC_F22, KC_F23, KC_F24, _______,
         _______, _______, _______, _______, _______, _______, _______,
         _______, _______, _______, KC_LENNY, _______, _______,
         _______, _______, _______, _______, _______, _______, _______,
@@ -130,13 +130,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
     switch (keycode)
     {
+#ifdef RGBLIGHT_ENABLE
     case RGB_SLD:
-        if (record->event.pressed)
-        {
-            rgblight_mode(1);
-        }
+        rgblight_mode(1);
         return false;
-        break;
+#endif
     case KC_SHRUG:
         if (record->event.pressed)
         {

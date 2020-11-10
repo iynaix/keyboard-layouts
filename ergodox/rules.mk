@@ -1,5 +1,5 @@
 # DEBOUNCE_TYPE = sym_g
 # DEBOUNCE_TYPE = eager_pk
 
-LTO_ENABLE = yes
+# LTO_ENABLE = yes
 TAP_DANCE_ENABLE = yes
