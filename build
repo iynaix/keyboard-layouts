@@ -8,6 +8,13 @@ from pathlib import Path
 from shutil import which
 
 
+def run(cmd, is_sudo=False):
+    if is_sudo:
+        cmd = ["sudo"] + cmd
+    print(" ".join(cmd))
+    subprocess.run(cmd)
+
+
 def write_config(qmk_dir):
     # write config to file
     with open("config.json", "w") as fp:
@@ -29,16 +36,26 @@ def get_qmk_dir():
             raise SystemExit
 
 
-def build_keyboard(qmk_dir, keyboard, flash=False):
-    keyboard_path = None
-    flasher = None
+class Keyboard:
+    def __init__(self, name, *, path=None, flasher="avrdude", sudo=False):
+        self.name = name
+        if path is None:
+            self.path = name
+        self.flasher = flasher
+        self.sudo = sudo
 
-    if keyboard == "ergodox":
-        keyboard_path = "ergodox_ez"
-        flasher = "teensy-loader-cli"
-    elif keyboard == "plaid":
-        keyboard_path = "plaid"
-        flasher = "avrdude"
+
+# keyboard path defaults to keyboard name
+KEYBOARDS = {
+    "ergodox": Keyboard(name="ergodox", path="ergodox_ez", flasher="teensy-loader-cli"),
+    "plaid": Keyboard(name="plaid"),
+    "boardwalk": Keyboard(name="boardwalk", sudo=True),
+}
+
+
+def build_keyboard(qmk_dir, keyboard, flash=False):
+    keyboard_path = KEYBOARDS[keyboard].path
+    flasher = KEYBOARDS[keyboard].flasher
 
     if which(flasher) is None:
         print(f"{flasher} is not installed!")
@@ -58,15 +75,16 @@ def build_keyboard(qmk_dir, keyboard, flash=False):
 
     current_dir = os.getcwd()
     os.chdir(qmk_dir)
+
     # subprocess.run(["git", "pull", "origin", "master"])
-    subprocess.run(["make", "clean"])
-    subprocess.run(["make", f"{keyboard_path}:iynaix:flash"])
+    run(["make", "clean"])
+    run(["make", f"{keyboard_path}:iynaix:flash"], KEYBOARDS[keyboard].sudo)
     os.chdir(current_dir)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Build and / or flashes qmk firmware.")
-    parser.add_argument("keyboard", choices=["ergodox", "plaid"])
+    parser.add_argument("keyboard", choices=KEYBOARDS.keys())
     args = parser.parse_args()
 
     # read config from file
