@@ -8,9 +8,8 @@ from pathlib import Path
 from shutil import which
 
 
-def run(cmd, is_sudo=False):
-    if is_sudo:
-        cmd = ["sudo"] + cmd
+def sudo(cmd):
+    cmd = ["sudo"] + cmd
     print(" ".join(cmd))
     subprocess.run(cmd)
 
@@ -37,19 +36,21 @@ def get_qmk_dir():
 
 
 class Keyboard:
-    def __init__(self, name, *, path=None, flasher="avrdude", sudo=False):
+    def __init__(self, name, *, path=None, flasher="avrdude"):
         self.name = name
-        if path is None:
-            self.path = name
+        self.path = path or name
         self.flasher = flasher
-        self.sudo = sudo
 
 
 # keyboard path defaults to keyboard name
 KEYBOARDS = {
-    "ergodox": Keyboard(name="ergodox", path="ergodox_ez", flasher="teensy-loader-cli"),
-    "plaid": Keyboard(name="plaid"),
-    "boardwalk": Keyboard(name="boardwalk", sudo=True),
+    "ergodox": Keyboard("ergodox", path="ergodox_ez", flasher="teensy-loader-cli"),
+    "plaid": Keyboard("plaid"),
+    "boardwalk": Keyboard("boardwalk"),
+    "canoe": Keyboard(
+        "canoe",
+        path="percent/canoe_gen2",
+    ),
 }
 
 
@@ -77,8 +78,8 @@ def build_keyboard(qmk_dir, keyboard, flash=False):
     os.chdir(qmk_dir)
 
     # subprocess.run(["git", "pull", "origin", "master"])
-    run(["make", "clean"])
-    run(["make", f"{keyboard_path}:iynaix:flash"], KEYBOARDS[keyboard].sudo)
+    sudo(["make", "clean"])
+    sudo(["make", f"{keyboard_path}:iynaix:flash"])
     os.chdir(current_dir)
 
 
