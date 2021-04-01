@@ -25,6 +25,9 @@ My layout for the [ErgoDox EZ][ez].
 Contains keys for navigation by mouse and a set of arrow keys oriented in the regular fashion.
 
 ## Macro Layer
+
+[![Macro layer](./images/macros.png)](http://www.keyboard-layout-editor.com/#/gists/6632ee175b508fd975c53c0555c8f70b)
+
 - `s` types `¯\_(ツ)_/¯`
 - `l` types `( ͡° ͜ʖ ͡°)`.
 - `t` types `(╯°□°）╯︵ ┻━┻`.
