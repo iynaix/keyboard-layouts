@@ -36,10 +36,11 @@ def get_qmk_dir():
 
 
 class Keyboard:
-    def __init__(self, name, *, path=None, flasher="avrdude"):
+    def __init__(self, name, *, path=None, keymap_path=None, flasher="avrdude"):
         self.name = name
         self.path = path or name
         self.flasher = flasher
+        self.keymap_path = self.path if keymap_path is None else keymap_path
 
 
 # keyboard path defaults to keyboard name
@@ -47,6 +48,12 @@ KEYBOARDS = {
     "ergodox": Keyboard("ergodox", path="ergodox_ez", flasher="teensy-loader-cli"),
     "plaid": Keyboard("plaid"),
     "boardwalk": Keyboard("boardwalk"),
+    "alice": Keyboard(
+        "alice",
+        path="projectkb/alice/rev2",
+        keymap_path="projectkb/alice",
+        flasher="dfu-util",
+    ),
     "canoe": Keyboard(
         "canoe",
         path="percent/canoe_gen2",
@@ -55,8 +62,9 @@ KEYBOARDS = {
 
 
 def build_keyboard(qmk_dir, keyboard, flash=False):
-    keyboard_path = KEYBOARDS[keyboard].path
-    flasher = KEYBOARDS[keyboard].flasher
+    kb = KEYBOARDS[keyboard]
+    keyboard_path = kb.path
+    flasher = kb.flasher
 
     if which(flasher) is None:
         print(f"{flasher} is not installed!")
@@ -69,7 +77,7 @@ def build_keyboard(qmk_dir, keyboard, flash=False):
     # Release RESET
     # Release BOOT
 
-    keymap_path = qmk_dir / "keyboards" / keyboard_path / "keymaps/iynaix"
+    keymap_path = qmk_dir / "keyboards" / kb.keymap_path / "keymaps/iynaix"
     # create keymaps symlink if it doesnt exist
     if not keymap_path.exists():
         keymap_path.symlink_to(Path(f"./{keyboard}").resolve())
