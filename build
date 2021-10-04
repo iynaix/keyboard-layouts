@@ -36,23 +36,26 @@ def get_qmk_dir():
 
 
 class Keyboard:
-    def __init__(self, name, *, path=None, keymap_path=None, flasher="avrdude"):
+    def __init__(self, name, *, path=None, keymap_path=None):
         self.name = name
         self.path = path or name
-        self.flasher = flasher
         self.keymap_path = self.path if keymap_path is None else keymap_path
 
 
 # keyboard path defaults to keyboard name
 KEYBOARDS = {
-    "ergodox": Keyboard("ergodox", path="ergodox_ez", flasher="teensy-loader-cli"),
+    "ergodox": Keyboard("ergodox", path="ergodox_ez"),
     "plaid": Keyboard("plaid"),
     "boardwalk": Keyboard("boardwalk"),
     "alice": Keyboard(
         "alice",
         path="projectkb/alice/rev2",
         keymap_path="projectkb/alice",
-        flasher="dfu-util",
+    ),
+    "corne": Keyboard("corne", path="crkbd"),
+    "sat75": Keyboard(
+        "satisfaction75",
+        path="cannonkeys/satisfaction75",
     ),
     "canoe": Keyboard(
         "canoe",
@@ -64,11 +67,6 @@ KEYBOARDS = {
 def build_keyboard(qmk_dir, keyboard, flash=False):
     kb = KEYBOARDS[keyboard]
     keyboard_path = kb.path
-    flasher = kb.flasher
-
-    if which(flasher) is None:
-        print(f"{flasher} is not installed!")
-        raise SystemExit
 
     # TODO: insert preamble for plaid
     # Plug in USB cable
@@ -79,8 +77,9 @@ def build_keyboard(qmk_dir, keyboard, flash=False):
 
     keymap_path = qmk_dir / "keyboards" / kb.keymap_path / "keymaps/iynaix"
     # create keymaps symlink if it doesnt exist
-    if not keymap_path.exists():
-        keymap_path.symlink_to(Path(f"./{keyboard}").resolve())
+    if keymap_path.exists():
+        keymap_path.unlink()
+    keymap_path.symlink_to(Path(f"./{keyboard}").resolve())
 
     current_dir = os.getcwd()
     os.chdir(qmk_dir)
